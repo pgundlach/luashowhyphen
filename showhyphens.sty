@@ -25,7 +25,7 @@ show_hyph = function(head)
     elseif head.id == 7 then             % disc
       local n = node.new("whatsit","pdf_literal")
       n.mode = 0
-      n.data = "q 1 0 0 RG  0.3 w 0 2 m 0 7 l S Q"
+      n.data = "q 1 0 0 RG 0.3 w 0 2 m 0 7 l S Q"
       n.next = head.next
       n.prev = head
       head.next = n
