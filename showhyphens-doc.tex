@@ -1,8 +1,21 @@
-\documentclass{article}
-\usepackage{graphics}
-\newcommand\LuaLaTeX{Lua\LaTeX}
+\documentclass{ltxdockit}
+\usepackage{dtklogos,csquotes,graphicx}
+
+\newcommand\pkgversion{0.2}
+
+\titlepage{%
+  title={The showhyphens package},
+  subtitle={Show all possible hyphenation points},
+  url={(none yet)},
+  author={Patrick Gundlach},
+  email={patrick@gundla.ch},
+  revision={\pkgversion},
+  date={\today}}
 
 \begin{document}
+\printtitlepage
+\tableofcontents
+
 \section{Documentation}
 
 When you load the package \texttt{showhyphens} in your \LuaLaTeX\ document, \LaTeX\ will show all possible hyphenation points. This
@@ -32,6 +45,22 @@ I never was a greater artist than now.
 yields \vspace{5mm}
 
 \noindent \includegraphics{showhyphens-sample}
+
+\section{Options}
+
+\begin{optionlist}
+\legitem{blue}{Shows hyphenation marker in blue, instead of red.}
+\end{optionlist}
+
+
+\section{Changes}
+
+\begin{changelog}
+\begin{release}{0.2}{2012-10-25}
+  \item New option \enquote{blue}, thanks go to Herbert Voß.
+
+\end{release}
+\end{changelog}
 
 \section{Copying}
 

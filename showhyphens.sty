@@ -1,4 +1,4 @@
-\ProvidesPackage{showhyphens}[2011/09/12 v0.1 Show hyphenation points (PGU)]
+\ProvidesPackage{showhyphens}[2012/10/25 v0.2 Show hyphenation points (PGU)]
 \RequirePackage{ifluatex,luatexbase}
 % License: MIT style license
 
@@ -16,6 +16,10 @@
 % FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 % WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+\def\lua@SHcolor{1 0 0}% red
+\DeclareOption{blue}{\def\lua@SHcolor{0 0 1 }}% must be a rgb color
+\ProcessOptions
+
 \ifluatex
 \directlua{
 show_hyph = function(head)
@@ -25,7 +29,7 @@ show_hyph = function(head)
     elseif head.id == 7 then             % disc
       local n = node.new("whatsit","pdf_literal")
       n.mode = 0
-      n.data = "q 1 0 0 RG 0.3 w 0 2 m 0 7 l S Q"
+      n.data = "q \lua@SHcolor RG 0.3 w 0 2 m 0 7 l S Q"
       n.next = head.next
       n.prev = head
       head.next = n
