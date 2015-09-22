@@ -1,7 +1,7 @@
 \documentclass{ltxdockit}
 \usepackage{dtklogos,csquotes,graphicx}
 
-\newcommand\pkgversion{0.3}
+\newcommand\pkgversion{0.4}
 
 \titlepage{%
   title={The showhyphens package},
@@ -46,6 +46,17 @@ yields \vspace{5mm}
 
 \noindent \includegraphics{showhyphens-sample}
 
+\section{Bugs and limitations}
+
+% see http://tex.stackexchange.com/q/268884
+Ligatures will give incorrect results.  For example \enquote{office} gives:
+offi'ce but should show of'ffice instead. While it is possible to look inside
+the ffi ligature and find out where the original hyphen character was placed
+(between the first f and the following component fi), it is very hard to draw
+the line indicating the hyphenation point correctly. The ffi ligature is one
+opaque rectancgle to the package. Drawing a line at the correct position is
+pure luck, and therefore out of the scope of the package.
+
 \section{Options}
 
 \begin{optionlist}
@@ -56,12 +67,14 @@ yields \vspace{5mm}
 \section{Changes}
 
 \begin{changelog}
+\begin{release}{0.4}{2015-09-22}
+    \item Document limitation on ligatures.
+\end{release}
 \begin{release}{0.3}{2014-07-30}
     \item Internal changes (node structure corrected, node ids not hard coded)
 \end{release}
 \begin{release}{0.2}{2012-10-25}
-  \item New option \enquote{blue}, thanks go to Herbert Voß.
-
+  \item New option \enquote{blue}, thanks go to Herbert Vo\ss.
 \end{release}
 \end{changelog}
 
