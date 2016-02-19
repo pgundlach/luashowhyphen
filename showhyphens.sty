@@ -1,8 +1,8 @@
-\ProvidesPackage{showhyphens}[2015/09/22 v0.4 Show hyphenation points (PGU)]
+\ProvidesPackage{showhyphens}[2016/02/19 v0.5c Show hyphenation points (PGU)]
 \RequirePackage{ifluatex,luatexbase}
 % License: MIT style license
 
-% Copyright (c) 2011-2015 Patrick Gundlach patrick@gundla.ch
+% Copyright (c) 2011-2016 Patrick Gundlach patrick@gundla.ch
 
 % Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the
 % "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge,
@@ -26,25 +26,40 @@ local show_hyph
 local hlist_node = node.id("hlist")
 local vlist_node = node.id("vlist")
 local disc_node = node.id("disc")
+local glyph_node = node.id("glyph")
+
+local function round(num)
+  return math.floor(num * 10^3 + 0.5) / 10^3
+end
 
 show_hyph = function(head)
   while head do
     if head.id == hlist_node or head.id == vlist_node then
-      show_hyph(head.head)
+      show_hyph(head.list)
     elseif head.id == disc_node then
-      local n = node.new("whatsit","pdf_literal")
-      n.mode = 0
-      n.data = "q \lua@SHcolor RG 0.3 w 0 2 m 0 7 l S Q"
-      n.next = head.next
-      head.next.prev = n
-      n.prev = head
-      head.next = n
-      head = n
+      if head.replace and head.replace.id == glyph_node and head.replace.components then
+        local wd = round(head.replace.width / 65781)  or 0
+        local ht = round(head.replace.height / 65781) + 0.5  or 0
+        local r = node.new("whatsit","pdf_literal")
+        r.data = "q 0.3 w 0 " .. tostring(ht) .. " m " .. tostring(-wd) .. " " .. tostring(ht) ..  "  l S Q"
+        node.insert_after(head.replace,head.replace,r)
+      else
+        local n = node.new("whatsit","pdf_literal")
+        n.mode = 0
+        n.data = "q \lua@SHcolor RG 0.3 w 0 2 m 0 7 l S Q"
+        n.next = head.next
+        head.next.prev = n
+        n.prev = head
+        head.next = n
+        head = n
+      end
     end
   head = head.next
   end
   return true
 end
+
+
 luatexbase.add_to_callback("post_linebreak_filter",show_hyph,"show_hyph")
 }
 \else

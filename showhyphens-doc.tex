@@ -1,7 +1,7 @@
 \documentclass{ltxdockit}
 \usepackage{dtklogos,csquotes,graphicx}
 
-\newcommand\pkgversion{0.4}
+\newcommand\pkgversion{0.5c}
 
 \titlepage{%
   title={The showhyphens package},
@@ -18,8 +18,8 @@
 
 \section{Documentation}
 
-When you load the package \texttt{showhyphens} in your \LuaLaTeX\ document, \LaTeX\ will show all possible hyphenation points. This
-package requires you to process the document with \LuaLaTeX.
+When you load the package \texttt{showhyphens} in your Lua\LaTeX\ document, \LaTeX\ will show all possible hyphenation points. This
+package requires you to process the document with Lua\LaTeX.
 
 \begin{verbatim}
 \documentclass{article}
@@ -49,8 +49,9 @@ yields \vspace{5mm}
 \section{Bugs and limitations}
 
 % see http://tex.stackexchange.com/q/268884
-Ligatures will give incorrect results.  For example \enquote{office} gives:
-offi'ce but should show of'fice instead. While it is possible to look inside
+Hyphenation points within ligatures cannot be shown correctly. The package marks the ligature with a horizontal bar on top. The hyphenation point is somewhere within the ligature.
+For example \enquote{office} gives the word \enquote{office} with a horizontal bar on top of \enquote{ffi} but should show of'fice instead.
+While it is possible to look inside
 the ffi ligature and find out where the original hyphen character was placed
 (between the first f and the following component fi), it is very hard to draw
 the line indicating the hyphenation point correctly. The ffi ligature is one
@@ -67,6 +68,21 @@ pure luck, and therefore out of the scope of the package.
 \section{Changes}
 
 \begin{changelog}
+\begin{release}{0.5c}{2016-02-19}
+    \item Remove viz-nodelist
+\end{release}
+\begin{release}{0.5b}{2016-02-05}
+    \item Fix version number
+\end{release}
+\begin{release}{0.5a}{2016-02-05}
+    \item Remove debug message
+\end{release}
+\begin{release}{0.5}{2016-02-05}
+    \item Mark ligatures
+\end{release}
+\begin{release}{0.4a}{2015-09-23}
+    \item Documentation update.
+\end{release}
 \begin{release}{0.4}{2015-09-22}
     \item Document limitation on ligatures.
 \end{release}
@@ -80,7 +96,7 @@ pure luck, and therefore out of the scope of the package.
 
 \section{Copying}
 
-Copyright 2011-2014 Patrick Gundlach (patrick@gundla.ch), licensed under the MIT license. See the style for details.
+Copyright 2011-2016 Patrick Gundlach (patrick@gundla.ch), licensed under the MIT license. See the style for details.
 
 
 \end{document}
